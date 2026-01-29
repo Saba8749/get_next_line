@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saba <saba@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:58:20 by saba              #+#    #+#             */
-/*   Updated: 2025/12/24 18:13:34 by saba             ###   ########.fr       */
+/*   Updated: 2026/01/29 18:53:34 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,26 @@ char *get_next_line(int fd)
 	bytes_read = 1;
 	
 	while(bytes_read > 0 && gnl_find_nl(stash, gnl_strlen(stash))== -1)
+	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
-	
+		
+		if(bytes_read == -1)
+		{
+			free(buffer);
+			return(NULL);
+		}
+		if(bytes_read == 0)
+		break;
+		if(bytes_read > 0)
+		{
+			buffer[bytes_read] = '\0';
+			stash = gnl_strjoin(stash, buffer, bytes_read);
+			if(!stash)
+			{
+				free(buffer);
+				return(NULL);
+			}
+		}
+	}
 	
 }
