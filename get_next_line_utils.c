@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saba <saba@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 18:11:16 by saba              #+#    #+#             */
-/*   Updated: 2025/12/23 22:33:39 by saba             ###   ########.fr       */
+/*   Updated: 2026/01/30 19:58:28 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,3 +73,30 @@ char *gnl_strjoin(char *s1, char *s2, size_t len2)
 	return (new);
 	
 }
+char *gnl_substr(char *s, size_t start, size_t len)
+{
+	size_t	s_len;
+	size_t	out_len;
+	char	*out;
+
+	s_len = gnl_strlen(s);
+	if (start >= s_len)
+		out_len = 0;
+	else
+	{
+		if (len > (s_len - start))
+			out_len = s_len - start;
+		else
+			out_len = len;
+	}
+	out = malloc(out_len + 1);
+	if (!out)
+		return (NULL);
+	if (out_len == 0)
+		out[0] = '\0';
+	else
+		gnl_memcpy(out, s + start, out_len);
+		out[out_len] == '\0';
+	return (out);
+}
+
