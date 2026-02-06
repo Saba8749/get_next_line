@@ -6,7 +6,7 @@
 /*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 18:11:16 by saba              #+#    #+#             */
-/*   Updated: 2026/01/30 19:58:28 by segribas         ###   ########.fr       */
+/*   Updated: 2026/02/05 16:38:46 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int gnl_find_nl(const char *s, size_t stash_len)
 char *gnl_strjoin(char *s1, char *s2, size_t len2)
 {
 	size_t len1;
-	size_t i;
 	char *new;
 	
 	if(s2 == NULL || len2 == 0)
@@ -96,7 +95,7 @@ char *gnl_substr(char *s, size_t start, size_t len)
 		out[0] = '\0';
 	else
 		gnl_memcpy(out, s + start, out_len);
-		out[out_len] == '\0';
+	out[out_len] = '\0';
 	return (out);
 }
 
