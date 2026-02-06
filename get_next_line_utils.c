@@ -6,15 +6,15 @@
 /*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 18:11:16 by saba              #+#    #+#             */
-/*   Updated: 2026/02/05 16:38:46 by segribas         ###   ########.fr       */
+/*   Updated: 2026/02/06 17:53:43 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void gnl_memcpy(char *dst, char *src, size_t len)
+static void	gnl_memcpy(char *dst, char *src, size_t len)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < len)
@@ -23,41 +23,45 @@ static void gnl_memcpy(char *dst, char *src, size_t len)
 		i++;
 	}
 }
-size_t gnl_strlen(char *s)
+
+size_t	gnl_strlen(char *s)
 {
-	size_t len;
-	
+	size_t	len;
+
 	if (!s)
-		return(0);
+		return (0);
 	len = 0;
-	while(s[len])
+	while (s[len])
 		len++;
-	return(len);
+	return (len);
 }
-int gnl_find_nl(const char *s, size_t stash_len)
+
+int	gnl_find_nl(const char *s, size_t stash_len)
 {
-	size_t i;
+	size_t	i;
+
 	if (!s)
 		return (-1);
 	i = 0;
-	while(i < stash_len)
+	while (i < stash_len)
 	{
-		if(s[i] == '\n')
+		if (s[i] == '\n')
 			return (i);
 		i++;
 	}
 	return (-1);
 }
-char *gnl_strjoin(char *s1, char *s2, size_t len2)
+
+char	*gnl_strjoin(char *s1, char *s2, size_t len2)
 {
-	size_t len1;
-	char *new;
-	
-	if(s2 == NULL || len2 == 0)
+	size_t	len1;
+	char	*new;
+
+	if (s2 == NULL || len2 == 0)
 		return (s1);
 	if (s1 == NULL)
 		len1 = 0;
-	else 
+	else
 		len1 = gnl_strlen(s1);
 	new = malloc(len1 + len2 + 1);
 	if (!new)
@@ -70,9 +74,9 @@ char *gnl_strjoin(char *s1, char *s2, size_t len2)
 	new[len1 + len2] = '\0';
 	free(s1);
 	return (new);
-	
 }
-char *gnl_substr(char *s, size_t start, size_t len)
+
+char	*gnl_substr(char *s, size_t start, size_t len)
 {
 	size_t	s_len;
 	size_t	out_len;
@@ -98,4 +102,3 @@ char *gnl_substr(char *s, size_t start, size_t len)
 	out[out_len] = '\0';
 	return (out);
 }
-

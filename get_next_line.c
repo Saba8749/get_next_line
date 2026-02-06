@@ -6,7 +6,7 @@
 /*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:58:20 by saba              #+#    #+#             */
-/*   Updated: 2026/02/05 16:27:34 by segribas         ###   ########.fr       */
+/*   Updated: 2026/02/06 21:07:49 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char	*read_to_stash(int fd, char *stash, char *buffer)
 		if (bytes_read == -1)
 		{
 			free(buffer);
+			free(stash);
 			return (NULL);
 		}
 		if (bytes_read == 0)
@@ -38,16 +39,26 @@ static char	*read_to_stash(int fd, char *stash, char *buffer)
 	free(buffer);
 	return (stash);
 }
-static char *update_stash(char *stash, int nl_pos)
+
+static char	*update_stash(char *stash, int nl_pos)
 {
-    char	*new_stash;
+	char	*new_stash;
+	size_t	stash_len;
+	size_t	rem_len;
 
 	if (nl_pos == -1)
 	{
 		free(stash);
 		return (NULL);
 	}
-	new_stash = gnl_substr(stash, nl_pos + 1, gnl_strlen(stash) - (nl_pos + 1));
+	stash_len = gnl_strlen(stash);
+	rem_len = stash_len - (nl_pos + 1);
+	if (rem_len == 0)
+	{
+		free(stash);
+		return (NULL);
+	}
+	new_stash = gnl_substr(stash, nl_pos + 1, rem_len);
 	free(stash);
 	return (new_stash);
 }
@@ -56,7 +67,7 @@ char	*get_next_line(int fd)
 {
 	static char	*stash;
 	char		*buffer;
-	char 		*line;
+	char		*line;
 	int			nl_pos;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
@@ -65,10 +76,14 @@ char	*get_next_line(int fd)
 	if (buffer == NULL)
 		return (NULL);
 	stash = read_to_stash(fd, stash, buffer);
-	if (!stash || *stash == '\0')
+	if (!stash)
 		return (NULL);
+	if (*stash == '\0')
+	{
+		free(stash);
+		return (stash = NULL, NULL);
+	}
 	nl_pos = gnl_find_nl(stash, gnl_strlen(stash));
-
 	if (nl_pos != -1)
 		line = gnl_substr(stash, 0, nl_pos + 1);
 	else
@@ -77,18 +92,18 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-// test.c
-int main(void)
-{
-    int fd = open("test.txt", O_RDONLY);
-    char *line;
-    
-    while ((line = get_next_line(fd)))
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-}
+// #include <fcntl.h>
+// #include <stdio.h>
+// // test.c
+// int main(void)
+// {
+//     int fd = open("test.txt", O_RDONLY);
+//     char *line;
+
+//     while ((line = get_next_line(fd)))
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
+//     close(fd);
+// }
