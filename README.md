@@ -1,6 +1,6 @@
 # get_next_line
 
-*This project has been created as part of the 42 curriculum by Saba Gribashvili.*
+*This project has been created as part of the 42 curriculum by segribas.*
 
 ## Description
 
@@ -12,11 +12,43 @@ The goal is to understand how file descriptors work, how to read from them effic
 
 ### Compilation
 
-The function requires a BUFFER_SIZE to be defined at compilation time:
+The function requires a BUFFER_SIZE to be defined at compilation time. The default value is 42 (defined in the header file), but can be overridden:
 
 ```bash
-cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c
+# Standard compilation
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c -o gnl_test
+
+# Or use the predefined value in header
+cc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c -o gnl_test
 ```
+
+### Testing
+
+Create a test file and run:
+```bash
+echo -e "Line 1\nLine 2\nLine 3" > test.txt
+./gnl_test
+```
+
+Test with different BUFFER_SIZE values:
+```bash
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c -o gnl_test
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=9999 get_next_line.c get_next_line_utils.c -o gnl_test
+```
+
+### Memory Leak Checking
+
+To check for memory leaks using valgrind:
+
+```bash
+# Compile with debug flag
+cc -Wall -Wextra -Werror -g -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c -o gnl_test
+
+# Run with valgrind
+valgrind --leak-check=full --show-leak-kinds=all ./gnl_test
+```
+
+Expected output: `All heap blocks were freed -- no leaks are possible`
 
 ### Usage Example
 
@@ -38,20 +70,6 @@ int main(void)
     close(fd);
     return (0);
 }
-```
-
-### Testing
-
-Create a test file and run the program:
-```bash
-echo -e "First line\nSecond line\nThird line" > test.txt
-./a.out
-```
-
-The function can be tested with different BUFFER_SIZE values to ensure it works in all cases:
-```bash
-cc -D BUFFER_SIZE=1 get_next_line.c get_next_line_utils.c main.c
-cc -D BUFFER_SIZE=9999 get_next_line.c get_next_line_utils.c main.c
 ```
 
 ## Algorithm Explanation
@@ -107,6 +125,6 @@ The core algorithm remains the same, only the storage mechanism changes from a s
 
 ### AI Usage
 
-AI was used to clarify concepts related to file descriptors and static variables.
+AI was used to clarify concepts related to file descriptors and static variables. 
 
 ## Author: segribas | School: 42 Heilbronn
