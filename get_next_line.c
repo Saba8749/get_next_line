@@ -6,7 +6,7 @@
 /*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:58:20 by saba              #+#    #+#             */
-/*   Updated: 2026/02/17 15:58:54 by segribas         ###   ########.fr       */
+/*   Updated: 2026/02/18 16:39:50 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,38 +92,22 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// test.c
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
+// // test.c
+// #include "get_next_line.h"
+// #include <fcntl.h>
+// #include <stdio.h>
 
-int main(void)
-{
-    int fd = open("test.txt", O_RDONLY);
-	// int fd = 0;
-    char *line;
+// int main(void)
+// {
+//     int fd = open("test.txt", O_RDONLY);
+// 	// int fd = 0;
+//     char *line;
 
-    while ((line = get_next_line(fd)) != NULL)
-    {
-        printf("%s", line);
-        free(line);
-    }
-    close(fd);
-    return (0);
-}
-
-// compiler flag: -D BUFFER_SIZE=NUMBER (optional, predefined 42 in .h file)
-// compiling with testfile
-// 1: touch test.txt
-// 2: cc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c -o gnl_test
-// 3: ./gnl_test
-
-// leak checking: -g for debugging flag (for valgrind)
-// 1: cc -Wall -Wextra -Werror -g get_next_line.c get_next_line_utils.c
-	// -o gnl_test (gehoert zur zeile 121)
-// 2: ./gnl_test
-// 3: valgrind --leak-check=full --show-leak-kinds=all ./gnl_test
-
-// bonus: only added [OPEN_MAX] to static char*
-	// (stash/buffer/storage) whatever you want to name it
-// now each fd has their own stash
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
+//     close(fd);
+//     return (0);
+// }

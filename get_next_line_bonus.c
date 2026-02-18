@@ -6,7 +6,7 @@
 /*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:58:20 by saba              #+#    #+#             */
-/*   Updated: 2026/02/17 15:48:05 by segribas         ###   ########.fr       */
+/*   Updated: 2026/02/18 17:07:38 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,27 @@ char	*get_next_line(int fd)
 // int main(void)
 // {
 //     int fd = open("test.txt", O_RDONLY);
+//     int fd1 = open("test1.txt", O_RDONLY);
 //     char *line;
 
+// 	line = get_next_line(fd); // first call fd
+// 	printf("%s", line);
+// 	free(line);
+// 	line = get_next_line(fd1); // first call fd1
+// 	printf("%s", line);
+// 	free(line);
 //     while ((line = get_next_line(fd)))
 //     {
 //         printf("%s", line);
 //         free(line);
 //     }
+//     printf("\nfile finished\n");	
+// 	while ((line = get_next_line(fd1)))
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
+//     printf("\nfile finished\n");	
 //     close(fd);
+//     close(fd1);
 // }

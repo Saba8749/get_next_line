@@ -6,7 +6,7 @@
 /*   By: segribas <segribas@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/23 18:59:42 by saba              #+#    #+#             */
-/*   Updated: 2026/02/17 16:06:52 by segribas         ###   ########.fr       */
+/*   Updated: 2026/02/18 17:07:26 by segribas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 42
 # endif
 
 char	*get_next_line(int fd);

@@ -111,7 +111,65 @@ This allows each file descriptor to maintain its own independent stash. When `ge
 
 The core algorithm remains the same, only the storage mechanism changes from a single pointer to an array of pointers.
 
+### Bonus Usage Example
+
+Here's an example demonstrating reading from multiple files simultaneously:
+
+```c
+#include "get_next_line_bonus.h"
+#include <fcntl.h>
+#include <stdio.h>
+
+int main(void)
+{
+    int fd = open("test.txt", O_RDONLY);
+    int fd1 = open("test1.txt", O_RDONLY);
+    char *line;
+
+    // Read first line from test.txt
+    line = get_next_line(fd);
+    printf("%s", line);
+    free(line);
+    
+    // Switch to test1.txt and read first line
+    line = get_next_line(fd1);
+    printf("%s", line);
+    free(line);
+    
+    // Continue reading rest of test.txt
+    while ((line = get_next_line(fd)))
+    {
+        printf("%s", line);
+        free(line);
+    }
+    printf("\nfile finished\n");
+    
+    // Continue reading rest of test1.txt
+    while ((line = get_next_line(fd1)))
+    {
+        printf("%s", line);
+        free(line);
+    }
+    printf("\nfile finished\n");
+    
+    close(fd);
+    close(fd1);
+    return (0);
+}
+```
+
+**What happens here:**
+- Two files are opened simultaneously (fd and fd1)
+- We alternate between reading from different files
+- Each file descriptor maintains its own position independently
+- When we switch from fd to fd1, fd's position is saved in `stash[fd]`
+- When we return to fd, it continues exactly where it left off
+- This demonstrates that the bonus version can handle multiple file descriptors without mixing their data
+
 ## Resources
+
+## For testing with Paco/Francinette 
+# https://github.com/Desoroxxx/francinette
 
 ### Documentation
 - `man 2 read` - system call documentation
@@ -125,6 +183,4 @@ The core algorithm remains the same, only the storage mechanism changes from a s
 
 ### AI Usage
 
-AI was used to clarify concepts related to file descriptors and static variables. 
-
-## Author: segribas | School: 42 Heilbronn
+AI was used to clarify concepts related to file descriptors and static variables.
